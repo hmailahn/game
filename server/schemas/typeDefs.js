@@ -3,18 +3,19 @@ const { gql } = require("apollo-server-express");
 
 // create our typeDefs
 const typeDefs = gql`
-  type Thought {
+  type MuscleGroup {
     _id: ID
-    thoughtText: String
+    name: String
+    upperLower: Boolean
     createdAt: String
     username: String
-    reactionCount: Int
-    reactions: [Reaction]
+    exercises: [exercise]
   }
 
-  type Reaction {
+  type exercise {
     _id: ID
-    reactionBody: String
+    name: String
+    pushPull: Boolean
     createdAt: String
     username: String
   }
@@ -22,19 +23,98 @@ const typeDefs = gql`
   type User {
     _id: ID
     username: String
+    password: String
     email: String
     friendCount: Int
-    thoughts: [Thought]
+    muscleGroups: [MuscleGroup]
     friends: [User]
+    createdAt: String
   }
-  
+
+  type Auth {
+    token: ID!
+    user: User
+  }
+
   type Query {
+    me: User
     users: [User]
     user(username: String!): User
-    thoughts(username: String): [Thought]
-    thought(_id: ID!): Thought
+    muscleGroups(username: String): [MuscleGroup]
+    muscleGroup(_id: ID!): MuscleGroup
+  }
+
+  type Mutation {
+    login(username: String!, password: String!): Auth
+    addUser(username: String!, email: String!, password: String!): Auth
+    addMuscleGroup(name: String!, upperLower: Boolean!): MuscleGroup
+    addExercise(
+      muscleGroupId: ID!
+      name: String!
+      pushPull: Boolean!
+    ): MuscleGroup
+    addFriend(friendId: ID!): User
+    deleteUser(username: String! email: String!): Auth
   }
 `;
 
 // export the typeDefs
 module.exports = typeDefs;
+
+// wokrout {
+//   muscle groups {
+//     chest {
+//       upperLower: true,
+//       exerciseNames: {
+//         name: 'Chest Fly',
+//         pushPull: true
+//       },
+//     },
+//     back {
+//       upperLower: true,
+//       exerciseNames: {
+//         name: 'Row',
+//         pushPull: false,
+//       },
+//     }
+//   }
+// }
+
+// workout {
+//   upper{
+//     muscleGroups {
+//       chest {
+//         exerciseNames: {
+//           name: 'Chest Fly',
+//           pushPull: true
+//         },
+//       }
+//     }
+//   }
+//   lower {
+//     muscleGroups {
+//       back {
+//         exerciseNames: {
+//         name: 'Row',
+//         pushPull: false,
+//       },
+//       }
+//     }
+//   }
+// }
+
+// workout {
+//   muscleGroups {
+//     back {
+//       upperLower: true,
+//       exerciseNames: {
+//         name: 'Row',
+//         pushPull: false,
+//       },
+//       muscleGroup: {
+//         id: 1,
+//         name: back
+//       }
+//     }
+//   }
+// }

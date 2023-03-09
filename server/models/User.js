@@ -1,5 +1,7 @@
 const { Schema, model } = require("mongoose");
-const bcrypt = require("bcrypt");
+const dateFormat = require("../utils/dateFormat");
+// to do
+// const bcrypt = require("bcrypt");
 
 const userSchema = new Schema(
   {
@@ -20,12 +22,19 @@ const userSchema = new Schema(
       required: true,
       minlength: 5,
     },
-    thoughts: [
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      get: (timestamp) => dateFormat(timestamp),
+    },
+    //to do
+    muscleGroups: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Thought",
+        ref: "MuscleGroup",
       },
     ],
+    //to do
     friends: [
       {
         type: Schema.Types.ObjectId,
@@ -41,20 +50,28 @@ const userSchema = new Schema(
 );
 
 // set up pre-save middleware to create password
-userSchema.pre("save", async function (next) {
-  if (this.isNew || this.isModified("password")) {
-    const saltRounds = 10;
-    this.password = await bcrypt.hash(this.password, saltRounds);
-  }
+// userSchema.pre("save", async function (next) {
+//   if (this.isNew || this.isModified("password")) {
+//     const saltRounds = 10;
+//     this.password = await bcrypt.hash(this.password, saltRounds);
+//   }
 
-  next();
-});
+//   next();
+// });
 
 // compare the incoming password with the hashed password
+// userSchema.methods.isCorrectPassword = async function (password) {
+//   return bcrypt.compare(password, this.password);
+// };
 userSchema.methods.isCorrectPassword = async function (password) {
-  return bcrypt.compare(password, this.password);
+  if (password == this.password) {
+    return true;
+  } else {
+    return false;
+  }
 };
 
+// to do
 userSchema.virtual("friendCount").get(function () {
   return this.friends.length;
 });

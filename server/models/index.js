@@ -1,4 +1,4 @@
 const User = require("./User");
-const Thought = require("./Thought");
+const MuscleGroup = require("./MuscleGroup");
 
-module.exports = { User, Thought };
+module.exports = { User, MuscleGroup };
