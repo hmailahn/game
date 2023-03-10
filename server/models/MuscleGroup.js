@@ -33,6 +33,10 @@ const muscleGroupSchema = new Schema(
   }
 );
 
+muscleGroupSchema.virtual('exerciseCount').get(function() {
+  return this.exercises.length;
+});
+
 const MuscleGroup = model("MuscleGroup", muscleGroupSchema);
 
 module.exports = MuscleGroup;

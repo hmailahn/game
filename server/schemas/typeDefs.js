@@ -9,6 +9,7 @@ const typeDefs = gql`
     upperLower: Boolean
     createdAt: String
     username: String
+    exerciseCount: Int
     exercises: [exercise]
   }
 
