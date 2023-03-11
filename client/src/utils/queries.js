@@ -8,6 +8,7 @@ export const QUERY_MuscleGroups= gql`
       upperLower
       createdAt
       username
+      exerciseCount
       exercises {
         _id
         createdAt
@@ -19,7 +20,7 @@ export const QUERY_MuscleGroups= gql`
   }
 `;
 
-export const QUERY_USER = gql`
+export const QUERY_User = gql`
   query user($username: String!) {
     user(username: $username) {
       _id
@@ -33,9 +34,31 @@ export const QUERY_USER = gql`
       muscleGroups {
         _id
         name
+        upperLower
         exercises {
             name
+            pushPull
         }
+      }
+    }
+  }
+`;
+
+export const QUERY_MuscleGroup = gql`
+  query muscleGroup($id: ID!) {
+    muscleGroup(_id: $id) {
+      _id
+      name
+      upperLower
+      createdAt
+      username
+      exerciseCount
+      exercises {
+        _id
+        createdAt
+        username
+        name
+        pushPull
       }
     }
   }
