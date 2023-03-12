@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_MuscleGroup } from "../utils/queries";
 import ExerciseList from '../components/ExerciseList';
+import ExerciseForm from "../components/ExerciseForm";
+import Auth from '../utils/auth';
 
 const MuscleGroup = (props) => {
   const { id: muscleGroupId } = useParams();
@@ -37,8 +39,14 @@ const MuscleGroup = (props) => {
         </div>
       </div>
       {muscleGroup.exerciseCount > 0 && <ExerciseList exercises={muscleGroup.exercises} />}
+      {Auth.loggedIn() && <ExerciseForm muscleGroupId={muscleGroup._id} />}
     </div>
   );
 };
+
+// Because the ThoughtForm and ReactionForm components are so similar, you could combine them into a more generic Form 
+// component to make your code more DRY. Doing so would involve passing in a few more props, though. For example, one 
+// prop could be a callback function that runs the necessary mutation. That way, the Form component itself wouldn't need
+//  to import useMutation. It would be part of the parent component and used in the callback.
 
 export default MuscleGroup;
