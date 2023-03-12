@@ -63,3 +63,47 @@ export const QUERY_MuscleGroup = gql`
     }
   }
 `;
+
+export const QUERY_ME = gql`
+  {
+    me {
+      _id
+      username
+      email
+      friendCount
+      muscleGroups {
+        _id
+        name
+        createdAt
+        exerciseCount
+        upperLower
+        exercises {
+          _id
+          createdAt
+          name
+          pushPull
+          username
+        }
+      }
+      friends {
+        _id
+        username
+      }
+    }
+  }
+`;
+
+export const QUERY_ME_BASIC = gql`
+  {
+    me {
+      _id
+      username
+      email
+      friendCount
+      friends {
+        _id
+        username
+      }
+    }
+  }
+`;

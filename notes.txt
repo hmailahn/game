@@ -1,0 +1,13 @@
+future updates:
+
+delete friend
+admin
+delete muscle group - admin
+delete exercise -admin
+
+
+BUGGY CONSOLE
+Sometimes when dealing with a lot of npm libraries that rely on related dependencies, 
+you may receive some type of error on the command line or experience buggy behavior. 
+This is usually resolved by removing both the node_modules directory and package-lock.json
+file from the directory and installing the dependencies again.
